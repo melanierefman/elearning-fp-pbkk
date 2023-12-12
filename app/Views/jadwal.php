@@ -370,21 +370,34 @@
 
             // Function to delete a jadwal
             async function deleteJadwal(jadwalId) {
-                try {
-                    const response = await fetch(`${apiUrlJadwal}/${jadwalId}`, {
-                        method: 'DELETE',
-                    });
+                const isConfirmed = confirm('Apakah Anda yakin ingin menghapus jadwal ini?');
 
-                    if (response.ok) {
-                        // Fetch and display the updated jadwal list
-                        fetchJadwal();
-                    } else {
-                        alert('Failed to delete jadwal');
+                if (isConfirmed) {
+                    try {
+                        const response = await fetch(`${apiUrlJadwal}/${jadwalId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        });
+
+                        if (response.ok) {
+                            // Fetch and display the updated jadwal list
+                            fetchJadwal();
+                        } else {
+                            const errorData = await response.json();
+                            console.error('Failed to delete jadwal:', errorData);
+                            alert('Failed to delete jadwal');
+                        }
+                    } catch (error) {
+                        console.error('Error deleting jadwal:', error);
+                        alert('Error deleting jadwal. See console for details.');
                     }
-                } catch (error) {
-                    console.error('Error deleting jadwal:', error);
                 }
             }
+
+
+
 
             // Initial fetch and display of jadwal
             fetchJadwal();
