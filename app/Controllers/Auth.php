@@ -4,14 +4,14 @@ namespace App\Controllers;
 
 class Auth extends BaseController
 {
-    public function password(): string
-    {
-        return view('password');
-    }
-
     public function register(): string
     {
         return view('register');
+    }
+
+    public function register_guru(): string
+    {
+        return view('register_guru');
     }
 
     public function login(): string
@@ -19,8 +19,8 @@ class Auth extends BaseController
         return view('login');
     }
 
-    public function login2(): string
+    public function login_guru(): string
     {
-        return view('login2');
+        return view('login_guru');
     }
 }
