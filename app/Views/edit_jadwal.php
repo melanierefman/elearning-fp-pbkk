@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Jadwal Baru</title>
+    <title>Edit Jadwal</title>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -14,7 +14,7 @@
             text-align: center;
         }
 
-        #addJadwalForm {
+        #editJadwalForm {
             width: 50%;
             margin: 20px auto;
         }
@@ -45,8 +45,11 @@
 
 <body>
 
-    <h2>Tambah Jadwal Baru</h2>
-    <form id="addJadwalForm">
+    <h2>Edit Jadwal</h2>
+    <form id="editJadwalForm">
+        <!-- Hidden input to store the jadwal ID -->
+        <input type="hidden" id="jadwalId" required>
+
         <label for="hari">Hari:</label>
         <input type="text" id="hari" required>
 
@@ -56,26 +59,43 @@
         <label for="kelas">Kelas:</label>
         <input type="text" id="kelas" required>
 
-        <button type="button" onclick="addJadwal()">Tambahkan Jadwal</button>
+        <button type="button" onclick="updateJadwal()">Update Jadwal</button>
     </form>
 
     <script>
         const apiUrlJadwal = 'http://localhost/elearning/database/jadwal-api.php';
 
-        async function addJadwal() {
+        async function fetchJadwalDetails(jadwalId) {
+            try {
+                const response = await fetch(`${apiUrlJadwal}/${jadwalId}`);
+                const data = await response.json();
+
+                // Populate the form fields with jadwal details
+                document.getElementById('jadwalId').value = data.id;
+                document.getElementById('hari').value = data.hari;
+                document.getElementById('waktu').value = data.waktu;
+                document.getElementById('kelas').value = data.kelas;
+            } catch (error) {
+                console.error('Error fetching jadwal details:', error);
+            }
+        }
+
+        async function updateJadwal() {
+            const jadwalId = document.getElementById('jadwalId').value;
             const hari = document.getElementById('hari').value;
             const waktu = document.getElementById('waktu').value;
             const kelas = document.getElementById('kelas').value;
 
-            console.log("Adding jadwal:", {
+            console.log("Updating jadwal:", {
+                jadwalId,
                 hari,
                 waktu,
                 kelas
             });
 
             try {
-                const response = await fetch(apiUrlJadwal, {
-                    method: 'POST',
+                const response = await fetch(`${apiUrlJadwal}/${jadwalId}`, {
+                    method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -87,19 +107,22 @@
                 });
 
                 if (response.ok) {
-                    console.log("Jadwal added successfully!");
-                    // Redirect back to the main page after adding the jadwal
+                    console.log("Jadwal updated successfully!");
+                    // Redirect back to the main page after updating the jadwal
                     window.location.href = '<?= base_url('./jadwal') ?>';
                 } else {
-                    console.error('Failed to add jadwal');
+                    console.error('Failed to update jadwal');
                     console.error(await response.text());
                 }
             } catch (error) {
-                console.error('Error adding jadwal:', error);
+                console.error('Error updating jadwal:', error);
             }
         }
 
-        // Remove the updateJadwal function from here, as it is not needed in this file.
+        // Fetch jadwal details when the page loads
+        const urlParams = new URLSearchParams(window.location.search);
+        const jadwalId = urlParams.get('id');
+        fetchJadwalDetails(jadwalId);
     </script>
 
 </body>

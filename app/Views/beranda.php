@@ -267,7 +267,7 @@
                     </span>
                 </li>
                 <li class="nav-item1 text-center">
-                    <a class="nav-link active" aria-current="page" href="<?= base_url('#') ?>">Keluar</a>
+                    <a class="nav-link active" aria-current="page" href="<?= base_url('./login') ?>">Keluar</a>
                 </li>
             </ul>
         </div>

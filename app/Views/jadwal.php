@@ -179,32 +179,6 @@
             height: auto;
         }
 
-
-        /* Added styles for the genre text box */
-        .genre-box {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            border-radius: 0.25rem;
-            color: #2D2E2E;
-            /* Set text color to white */
-        }
-
-        /* Added styles for genre colors */
-        .fiction {
-            background-color: #DDFEDF;
-            /* Green for Fiction */
-        }
-
-        .mistery {
-            background-color: #FDEFD7;
-            /* Yellow for Mystery */
-        }
-
-        .biographic {
-            background-color: #E7DEFB;
-            /* Purple for Biography */
-        }
-
         .navbar-nav .nav-link {
             outline: none;
         }
@@ -267,7 +241,7 @@
                     </span>
                 </li>
                 <li class="nav-item1 text-center">
-                    <a class="nav-link active" aria-current="page" href="<?= base_url('./chart_users') ?>">Keluar</a>
+                    <a class="nav-link active" aria-current="page" href="<?= base_url('./login') ?>">Keluar</a>
                 </li>
             </ul>
         </div>
@@ -300,7 +274,6 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Hari</th>
                         <th>Waktu</th>
                         <th>Kelas</th>
@@ -314,9 +287,8 @@
             const apiUrlJadwal = 'http://localhost/elearning/database/jadwal-api.php';
             const jadwalTableBody = document.getElementById('jadwalTableBody');
 
-            // Search jadwal on form submit
             window.searchJadwal = function() {
-                console.log('Search button clicked'); // Tambahkan ini untuk debugging
+                console.log('Search button clicked');
                 const searchTerm = document.getElementById("searchInput").value.trim();
 
                 if (searchTerm === "") {
@@ -326,27 +298,24 @@
                 }
             };
 
-            // Function to render jadwal data
             function renderJadwal(jadwal) {
                 jadwalTableBody.innerHTML = '';
 
                 jadwal.forEach(item => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                <td>${item.id}</td>
-                <td>${item.hari}</td>
-                <td>${item.waktu}</td>
-                <td>${item.kelas}</td>
-                <td>
-                    <button class="btn btn-info" onclick="editJadwal(${item.id})">Edit</button>
-                    <button class="btn btn-danger" onclick="deleteJadwal(${item.id})">Delete</button>
-                </td>
-            `;
+                    <td>${item.hari}</td>
+                    <td>${item.waktu}</td>
+                    <td>${item.kelas}</td>
+                    <td>
+                        <button class="btn btn-info" onclick="editJadwal(${item.id})">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteJadwal(${item.id})">Hapus</button>
+                    </td>
+                `;
                     jadwalTableBody.appendChild(row);
                 });
             }
 
-            // Function to fetch and display jadwal
             async function fetchJadwal() {
                 try {
                     const response = await fetch(apiUrlJadwal);
@@ -358,27 +327,27 @@
                 }
             }
 
-            // Function to navigate to the add jadwal page
             function goToAddJadwalPage() {
                 window.location.href = '<?= base_url('./add_jadwal') ?>';
             }
 
-            // Function to navigate to the edit jadwal page
             function editJadwal(jadwalId) {
                 window.location.href = `<?= base_url('./edit_jadwal') ?>?id=${jadwalId}`;
             }
 
-            // Function to delete a jadwal
             async function deleteJadwal(jadwalId) {
                 const isConfirmed = confirm('Apakah Anda yakin ingin menghapus jadwal ini?');
 
                 if (isConfirmed) {
                     try {
-                        const response = await fetch(`${apiUrlJadwal}/${jadwalId}`, {
+                        const response = await fetch(`${apiUrlJadwal}`, {
                             method: 'DELETE',
                             headers: {
                                 'Content-Type': 'application/json',
                             },
+                            body: JSON.stringify({
+                                id: jadwalId
+                            }), // send the data in the request body
                         });
 
                         if (response.ok) {
@@ -396,13 +365,8 @@
                 }
             }
 
-
-
-
-            // Initial fetch and display of jadwal
             fetchJadwal();
 
-            // Function to fetch and render filtered jadwal
             async function fetchFilteredJadwal(searchTerm) {
                 try {
                     const response = await fetch(`${apiUrlJadwal}?search=${searchTerm}`);

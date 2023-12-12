@@ -180,29 +180,29 @@
         }
 
 
-        /* Added styles for the genre text box */
-        .genre-box {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            border-radius: 0.25rem;
-            color: #2D2E2E;
-            /* Set text color to white */
+        .bg-success {
+            background-color: #DDFEDF !important;
+            /* Hijau */
         }
 
-        /* Added styles for genre colors */
-        .fiction {
-            background-color: #DDFEDF;
-            /* Green for Fiction */
+        .bg-primary {
+            background-color: #DDEEFE !important;
+            /* Biru */
         }
 
-        .mistery {
-            background-color: #FDEFD7;
-            /* Yellow for Mystery */
+        .bg-purple {
+            background-color: #E8DDFE !important;
+            /* Ungu */
         }
 
-        .biographic {
-            background-color: #E7DEFB;
-            /* Purple for Biography */
+        .bg-pink {
+            background-color: #FEDDDD !important;
+            /* Pink */
+        }
+
+        .bg-orange {
+            background-color: #FFF0BB !important;
+            /* Kuning */
         }
 
         .navbar-nav .nav-link {
@@ -268,7 +268,7 @@
                     </span>
                 </li>
                 <li class="nav-item1 text-center">
-                    <a class="nav-link active" aria-current="page" href="<?= base_url('./chart_users') ?>">Keluar</a>
+                    <a class="nav-link active" aria-current="page" href="<?= base_url('./login') ?>">Keluar</a>
                 </li>
             </ul>
         </div>
@@ -330,6 +330,28 @@
                 }
             };
 
+            function getKelasBackgroundColorClass(namaKelas) {
+                switch (namaKelas.toLowerCase()) {
+                    case 'fisika':
+                    case 'seni':
+                        return 'bg-success'; // hijau
+                    case 'matematika':
+                    case 'olahraga':
+                        return 'bg-primary'; // biru
+                    case 'sejarah':
+                    case 'ekonomi':
+                        return 'bg-purple'; // ungu
+                    case 'kimia':
+                    case 'musik':
+                        return 'bg-pink'; // pink
+                    case 'sosiologi':
+                    case 'geografi':
+                        return 'bg-orange'; // kuning
+                    default:
+                        return '';
+                }
+            }
+
             function renderKelas(kelas) {
                 const kelasContainer = document.getElementById("resultKelas");
                 kelasContainer.innerHTML = "";
@@ -342,7 +364,9 @@
                     <div class="card shadow">
                         <div class="card-body img-fuild d-flex flex-column">
                             <img src="./assets/mtk.png" alt="Logo" width="12" height="6" class="d-inline-block align-text-top" style="padding-bottom: 12px;">
-                            <p class="card-text">${kelasItem.nama_kelas}</p>
+                            <div class="card shadow ${getKelasBackgroundColorClass(kelasItem.nama_kelas)}">
+                                <p class="text-center">${kelasItem.nama_kelas}</p>
+                            </div>
                         </div>
                     </div>
                 `;
