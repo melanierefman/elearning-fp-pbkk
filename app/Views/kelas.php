@@ -233,6 +233,7 @@
             padding: 0.5rem 1rem;
             border-radius: 0.25rem;
             color: #000;
+            background-color: #FFF0BB;
             /* Set text color to white */
         }
     </style>
@@ -340,7 +341,7 @@
                     card.innerHTML = `
                     <div class="card shadow">
                         <div class="card-body img-fuild d-flex flex-column">
-                            <img src="./assets/mtk.png" alt="Logo" width="12" height="6" class="d-inline-block align-text-top">
+                            <img src="./assets/mtk.png" alt="Logo" width="12" height="6" class="d-inline-block align-text-top" style="padding-bottom: 12px;">
                             <p class="card-text">${kelasItem.nama_kelas}</p>
                         </div>
                     </div>
