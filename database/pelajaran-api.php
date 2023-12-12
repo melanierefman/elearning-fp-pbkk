@@ -1,5 +1,3 @@
-<!-- http://localhost/elearning/database/pelajaran-api.php -->
-
 <?php
 $con = mysqli_connect("localhost", "root", "", "elearning-api");
 

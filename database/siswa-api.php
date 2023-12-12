@@ -1,6 +1,8 @@
-<!-- http://localhost/elearning/database/siswa-api.php -->
-
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 $con = mysqli_connect("localhost", "root", "", "elearning-api");
 
 if (!$con) {
@@ -15,35 +17,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($postdata)) {
         // Decode JSON data
         $data = json_decode($postdata, true);
+        // var_dump($data); // Check if data is received correctly
 
-        // Assuming JSON data contains necessary fields for a new mapel
-        $nama_siswa = mysqli_real_escape_string($con, $data['nama_siswa']);
-        $email_siswa = mysqli_real_escape_string($con, $data['nis']);
-        $password_siswa = mysqli_real_escape_string($con, $data['password_siswa']);
+        // Assuming JSON data contains necessary fields for a new siswa
+        $nama_siswa = isset($data['nama_siswa']) ? mysqli_real_escape_string($con, $data['nama_siswa']) : '';
+        $nis = isset($data['nis']) ? mysqli_real_escape_string($con, $data['nis']) : '';
+        $kelas_siswa = isset($data['kelas_siswa']) ? mysqli_real_escape_string($con, $data['kelas_siswa']) : '';
+        $password_siswa = isset($data['password_siswa']) ? mysqli_real_escape_string($con, $data['password_siswa']) : '';
 
         // Use prepared statement to prevent SQL injection
-        $insertSql = "INSERT INTO siswa (nama_siswa, nis, password_siswa) VALUES (?, ?)";
+        $insertSql = "INSERT INTO siswa (nama_siswa, nis, kelas_siswa, password_siswa) VALUES (?, ?, ?, ?)";
         $stmt = mysqli_prepare($con, $insertSql);
 
         // Bind parameters
-        mysqli_stmt_bind_param($stmt, "ss", $nama_mapel, $deskripsi_mapel);
+        mysqli_stmt_bind_param($stmt, "ssss", $nama_siswa, $nis, $kelas_siswa, $password_siswa);
 
         // Execute statement
         $insertResult = mysqli_stmt_execute($stmt);
 
         if ($insertResult) {
             http_response_code(201); // Created
-            echo "Data inserted successfully";
+            echo json_encode(['message' => 'Data inserted successfully']);
         } else {
             http_response_code(500); // Internal Server Error
-            echo "Error inserting data: " . mysqli_error($con);
+            echo json_encode(['error' => 'Error inserting data: ' . mysqli_error($con)]);
         }
 
         // Close the statement
         mysqli_stmt_close($stmt);
     } else {
         http_response_code(400); // Bad Request
-        echo "Invalid JSON data";
+        echo json_encode(['error' => 'Invalid JSON data']);
     }
 }
 
@@ -60,6 +64,7 @@ if ($result) {
             'id' => $row['id'],
             'nama_siswa' => $row['nama_siswa'],
             'nis' => $row['nis'],
+            'kelas_siswa' => $row['kelas_siswa'],
             'password_siswa' => $row['password_siswa']
         );
     }
@@ -67,7 +72,7 @@ if ($result) {
     echo json_encode($response, JSON_PRETTY_PRINT);
 } else {
     http_response_code(500); // Internal Server Error
-    echo "Error fetching data: " . mysqli_error($con);
+    echo json_encode(['error' => 'Error fetching data: ' . mysqli_error($con)]);
 }
 
 // Close the database connection

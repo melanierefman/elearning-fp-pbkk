@@ -1,4 +1,4 @@
-<!-- http://localhost/elearning/database_guru-api.php -->
+<!-- http://localhost/elearning/database/guru-api.php -->
 
 <?php
 $con = mysqli_connect("localhost", "root", "", "elearning-api");
