@@ -24,7 +24,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            background-color: #4829B2;
+            background-color: #002979;
             color: #fff;
             padding-top: 40px;
             padding-right: 20px;
@@ -76,7 +76,6 @@
             justify-content: flex-end;
             padding: 30px;
             padding-bottom: 0px;
-
         }
 
         .user-info img {
@@ -99,97 +98,29 @@
             /* Center the image */
         }
 
-        .desktop-1-Mss {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-        }
-
-        .auto-group-39fb-PpZ {
-            display: flex;
+        .d-flex {
             justify-content: space-between;
             align-items: center;
         }
 
-        .vector-zxm {
-            width: 50px;
-            height: auto;
+        /* Add separate containers for pelajaran and tugas */
+        .result-container {
+            margin: 20px;
         }
 
-        .navbar-43-WRK {
+        .result-container h5 {
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+
+        .result-container .row {
             display: flex;
-            align-items: center;
-        }
-
-        .auto-group-zq2d-y41 {
-            display: flex;
-            align-items: center;
-        }
-
-        .frame-63-hVo {
-            display: flex;
-            align-items: center;
-        }
-
-        .frame-64-3Zf {
-            display: flex;
-            align-items: center;
-            margin-right: 20px;
-        }
-
-        .raphael-books-XNM {
-            width: 30px;
-            height: auto;
-            margin-right: 10px;
-        }
-
-        .media-ilmu-pcM,
-        .catalog-JGd,
-        .delivery-R6M,
-        .delivery-LUD {
-            margin: 0;
-            padding: 0;
-            margin-right: 20px;
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .frame-65-5Au {
-            display: flex;
-            align-items: center;
-        }
-
-        .ellipse-1-Nvh {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: #fff;
-            margin-right: 10px;
-        }
-
-        .delivery-1Ts {
-            margin: 0;
-            padding: 0;
-            margin-right: 10px;
-            color: #fff;
-        }
-
-        .iconamoon-arrow-up-2-light-jem {
-            width: 20px;
-            height: auto;
-        }
-
-        .navbar-nav .nav-link {
-            outline: none;
-        }
-
-        .navbar-nav .nav-item.active a {
-            color: blue;
-            font-weight: bold;
+            gap: 20px;
         }
 
         .card {
-            height: 100%;
+            flex: 1 1 300px;
+            /* Added flex property */
             display: flex;
             flex-direction: column;
         }
@@ -231,13 +162,13 @@
                 <li class="nav-item">
                     <span style="display: flex; align-items: center; padding-left: 20px;">
                         <img src="./assets/kelas.png" alt="Logo" width="20" height="20" class="d-inline-block align-text-top">
-                        <a class="nav-link active" style="padding-left: 5px;" aria-current="page" href="<?= base_url('./guru_kelas') ?>">Kelas</a>
+                        <a class="nav-link active" style="padding-left: 5px;" aria-current="page" href="<?= base_url('./kelas') ?>">Kelas</a>
                     </span>
                 </li>
                 <li class="nav-item">
                     <span style="display: flex; align-items: center; padding-left: 20px;">
                         <img src="./assets/jadwal.png" alt="Logo" width="20" height="20" class="d-inline-block align-text-top">
-                        <a class="nav-link active" style="padding-left: 5px;" aria-current="page" href="<?= base_url('./guru_jadwal') ?>">Jadwal</a>
+                        <a class="nav-link active" style="padding-left: 5px;" aria-current="page" href="<?= base_url('./jadwal') ?>">Jadwal</a>
                     </span>
                 </li>
                 <li class="nav-item1 text-center">
@@ -262,28 +193,23 @@
                 <img src="./assets/ellipse-1-bg-eyb.png" alt="Logo" width="48" height="48" class="d-inline-block align-text-top">
                 <span>
                     <div class="user-name">Melanie Refman</div>
-                    <div class="user-name1" style="font-size: 13px;">Guru</div>
+                    <div class="user-name1" style="font-size: 13px;">Kelas 12</div>
                 </span>
             </div>
         </div>
 
         <!-- Add separate containers for pelajaran and tugas -->
-        <div style="margin: 20px;">
-            <img src="./assets/welcome_guru.png" class="img-fluid"><br>
-            <h5 style="padding-top: 12px; padding-bottom: 12px;">Lanjutkan Mengajar</h5>
+        <div class="result-container">
+            <img src="./assets/welcome.png" class="img-fluid" style="padding-bottom: 40px;"><br>
             <div class="row" id="resultPelajaran"></div>
-            <h5>Daftar Koreksi Tugas</h5>
-            <div class="row mt-4" id="resultTugas"></div>
         </div>
-
     </div>
+
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const apiUrlPelajaran = "http://localhost/elearning/database/pelajaran-api.php";
-            const apiUrlTugas = "http://localhost/elearning/database/tugas-api.php";
             let allPelajaran = [];
-            let allTugas = [];
 
             // Load all pelajaran and tugas on page load
             window.addEventListener('load', function() {
@@ -296,14 +222,6 @@
                     })
                     .catch(handleError);
 
-                // Fetch tugas
-                fetch(apiUrlTugas)
-                    .then(response => response.json())
-                    .then(function(data) {
-                        allTugas = data;
-                        renderTugas(allTugas);
-                    })
-                    .catch(handleError);
             });
 
             // Search pelajaran on button click
@@ -324,40 +242,18 @@
 
                 pelajaran.forEach(pel => {
                     const card = document.createElement('div');
-                    card.classList.add('col-4', 'col-md-2', 'mb-3');
+                    card.classList.add('mb-3');
 
                     card.innerHTML = `
-                    <div class="card shadow">
-                        <div class="card-body img-fuild d-flex flex-column">
-                            <img src="./assets/mtk.png" alt="Logo" width="50" height="50" class="d-inline-block align-text-top mb-3">
-                            <p class="card-text">${pel.nama_pel}</p>
+                    <div class="card shadow d-flex flex-column">
+                        <div class="card-body img-fuild">
                             <h6 class="card-title">${pel.materi_ajar}</h6>
+                            <p class="card-title">${pel.nama_pel}</p>
                         </div>
                     </div>
                 `;
 
                     pelajaranContainer.appendChild(card);
-                });
-            }
-
-            function renderTugas(tugas) {
-                const tugasContainer = document.getElementById("resultTugas");
-                tugasContainer.innerHTML = "";
-
-                tugas.forEach(tugasItem => {
-                    const card = document.createElement('div');
-                    card.classList.add('mb-3'); // Add margin-bottom for spacing
-
-                    card.innerHTML = `
-                    <div class="card shadow d-flex flex-column">
-                        <div class="card-body img-fuild">
-                            <h6 class="card-title">${tugasItem.nama_tugas}</h6>
-                            <p class="card-title">${tugasItem.deadline}</p>
-                        </div>
-                    </div>
-                `;
-
-                    tugasContainer.appendChild(card);
                 });
             }
 

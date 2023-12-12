@@ -179,32 +179,6 @@
             height: auto;
         }
 
-
-        /* Added styles for the genre text box */
-        .genre-box {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            border-radius: 0.25rem;
-            color: #2D2E2E;
-            /* Set text color to white */
-        }
-
-        /* Added styles for genre colors */
-        .fiction {
-            background-color: #DDFEDF;
-            /* Green for Fiction */
-        }
-
-        .mistery {
-            background-color: #FDEFD7;
-            /* Yellow for Mystery */
-        }
-
-        .biographic {
-            background-color: #E7DEFB;
-            /* Purple for Biography */
-        }
-
         .navbar-nav .nav-link {
             outline: none;
         }

@@ -23,4 +23,9 @@ class Siswa extends BaseController
     {
         return view('edit_jadwal');
     }
+
+    public function kelas_mat(): string
+    {
+        return view('kelas_mat');
+    }
 }

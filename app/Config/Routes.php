@@ -8,6 +8,7 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 $routes->get('/kelas', 'Siswa::kelas');
 $routes->get('/jadwal', 'Siswa::jadwal');
+$routes->get('/kelas_mat', 'Siswa::kelas_mat');
 
 $routes->get('/guru_kelas', 'Guru::guru_kelas');
 $routes->get('/guru_beranda', 'Guru::guru_beranda');
