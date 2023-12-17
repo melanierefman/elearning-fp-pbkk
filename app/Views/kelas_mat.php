@@ -245,10 +245,12 @@
                     card.classList.add('mb-3');
 
                     card.innerHTML = `
-                    <div class="card shadow d-flex flex-column">
+                    <div class="card shadow d-flex flex-column" style="align-items: flex-start;">
                         <div class="card-body img-fuild">
-                            <h6 class="card-title">${pel.materi_ajar}</h6>
                             <p class="card-title">${pel.nama_pel}</p>
+                            <a href="./materi_page"> <!-- Tambahkan ini -->
+                                <h6 class="card-title">${pel.materi_ajar}</h6>
+                            </a> <!-- Tambahkan ini -->
                         </div>
                     </div>
                 `;

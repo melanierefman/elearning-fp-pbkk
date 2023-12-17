@@ -28,4 +28,9 @@ class Siswa extends BaseController
     {
         return view('kelas_mat');
     }
+        public function materi_page(): string
+    {
+        return view('materi_page');
+    }
+
 }
