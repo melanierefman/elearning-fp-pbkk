@@ -179,32 +179,6 @@
             height: auto;
         }
 
-
-        .bg-success {
-            background-color: #DDFEDF !important;
-            /* Hijau */
-        }
-
-        .bg-primary {
-            background-color: #DDEEFE !important;
-            /* Biru */
-        }
-
-        .bg-purple {
-            background-color: #E8DDFE !important;
-            /* Ungu */
-        }
-
-        .bg-pink {
-            background-color: #FEDDDD !important;
-            /* Pink */
-        }
-
-        .bg-orange {
-            background-color: #FFF0BB !important;
-            /* Kuning */
-        }
-
         .navbar-nav .nav-link {
             outline: none;
         }
@@ -233,7 +207,6 @@
             padding: 0.5rem 1rem;
             border-radius: 0.25rem;
             color: #000;
-            background-color: #FFF0BB;
             /* Set text color to white */
         }
     </style>
@@ -258,13 +231,13 @@
                 <li class="nav-item">
                     <span style="display: flex; align-items: center; padding-left: 20px;">
                         <img src="./assets/kelas.png" alt="Logo" width="20" height="20" class="d-inline-block align-text-top">
-                        <a class="nav-link active" style="padding-left: 5px;" aria-current="page" href="<?= base_url('#') ?>">Kelas</a>
+                        <a class="nav-link active" style="padding-left: 5px;" aria-current="page" href="<?= base_url('./kelas') ?>">Kelas</a>
                     </span>
                 </li>
                 <li class="nav-item">
                     <span style="display: flex; align-items: center; padding-left: 20px;">
                         <img src="./assets/jadwal.png" alt="Logo" width="20" height="20" class="d-inline-block align-text-top">
-                        <a class="nav-link active" style="padding-left: 5px;" aria-current="page" href="<?= base_url('./jadwal') ?>">Jadwal</a>
+                        <a class="nav-link active" style="padding-left: 5px;" aria-current="page" href="<?= base_url('#') ?>">Jadwal</a>
                     </span>
                 </li>
                 <li class="nav-item1 text-center">
@@ -276,120 +249,137 @@
 
     <div style="margin-left: 270px;">
         <div class="d-flex justify-content-between align-items-center" style=" padding-bottom:10px;">
-        <div class="container mt-4" style="width: 70%">
+            <div class="container mt-4" style="width: 70%">
                 <form class="form-inline">
                     <div class="d-flex justify-content-between align-items-center">
                         <input class="form-control" type="search" placeholder="Cari kelas sekarang..." id="searchInput" aria-label="Search">
-                        <button class="btn btn-primary" type="button" onclick="searchKelas()" style="background-color: #4829B2; color: #ffffff;">Cari</button>
+                        <button class="btn btn-primary" type="button" onclick="searchJadwal()" style="background-color: #4829B2; color: #ffffff;">Cari</button>
                     </div>
                 </form>
             </div>
             <div class="container mt-4" style="width: 20%">
-                <a href="<?= base_url('./add_class') ?>" class="btn btn-primary" style="background-color: #4829B2; color: #ffffff;">+ Add Class</a>
+                <button class="btn btn-primary" type="button" onclick="goToAddJadwalPage()" style="background-color: #4829B2; color: #ffffff;">+ Add Schedule</button>
             </div>
-
             <div class="user-info">
                 <img src="./assets/ellipse-1-bg-eyb.png" alt="Logo" width="48" height="48" class="d-inline-block align-text-top">
                 <span>
                     <div class="user-name">Melanie Refman</div>
-                    <div class="user-name1" style="font-size: 13px;">Kelas 12</div>
+                    <div class="user-name1" style="font-size: 13px;">5025211029</div>
                 </span>
             </div>
         </div>
 
-        <!-- Add a container for kelas -->
-        <div style="margin: 20px;">
-            <div class="row" id="resultKelas"></div>
+        <!-- Add a container for jadwal -->
+        <div id="jadwalList">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Hari</th>
+                        <th>Waktu</th>
+                        <th>Kelas</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="jadwalTableBody"></tbody>
+            </table>
         </div>
+        <script>
+            const apiUrlJadwal = 'http://localhost/elearning/database/jadwal-api.php';
+            const jadwalTableBody = document.getElementById('jadwalTableBody');
 
-    </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const apiUrlKelas = "http://localhost/elearning/database/kelas-api.php";
-            let allKelas = [];
-
-            // Load all kelas on page load
-            window.addEventListener('load', function() {
-                // Fetch kelas
-                fetch(apiUrlKelas)
-                    .then(response => response.json())
-                    .then(function(data) {
-                        allKelas = data;
-                        renderKelas(allKelas);
-                    })
-                    .catch(handleError);
-            });
-           
-            // Search kelas on button click
-            window.searchKelas = function() {
+            window.searchJadwal = function() {
+                console.log('Search button clicked');
                 const searchTerm = document.getElementById("searchInput").value.trim();
 
                 if (searchTerm === "") {
-                    renderKelas(allKelas);
+                    fetchJadwal();
                 } else {
-                    const filteredKelas = filterKelas(allKelas, searchTerm);
-                    renderKelas(filteredKelas);
+                    fetchFilteredJadwal(searchTerm);
                 }
             };
 
-            // function goToAddClassPage() {
-            //     window.location.href = '<?= base_url('./add_class') ?>';
-            // }
+            function renderJadwal(jadwal) {
+                jadwalTableBody.innerHTML = '';
 
-            function getKelasBackgroundColorClass(namaKelas) {
-                switch (namaKelas.toLowerCase()) {
-                    case 'fisika':
-                    case 'seni':
-                        return 'bg-success'; // hijau
-                    case 'matematika':
-                    case 'olahraga':
-                        return 'bg-primary'; // biru
-                    case 'sejarah':
-                    case 'ekonomi':
-                        return 'bg-purple'; // ungu
-                    case 'kimia':
-                    case 'musik':
-                        return 'bg-pink'; // pink
-                    case 'sosiologi':
-                    case 'geografi':
-                        return 'bg-orange'; // kuning
-                    default:
-                        return '';
+                jadwal.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                    <td>${item.hari}</td>
+                    <td>${item.waktu}</td>
+                    <td>${item.kelas}</td>
+                    <td>
+                        <button class="btn btn-info" onclick="editJadwal(${item.id})">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteJadwal(${item.id})">Hapus</button>
+                    </td>
+                `;
+                    jadwalTableBody.appendChild(row);
+                });
+            }
+
+            async function fetchJadwal() {
+                try {
+                    const response = await fetch(apiUrlJadwal);
+                    const data = await response.json();
+
+                    renderJadwal(data);
+                } catch (error) {
+                    console.error('Error fetching jadwal:', error);
                 }
             }
 
-            function renderKelas(kelas) {
-                const kelasContainer = document.getElementById("resultKelas");
-                kelasContainer.innerHTML = "";
-
-                kelas.forEach(kelasItem => {
-                    const card = document.createElement('div');
-                    card.classList.add('col-4', 'col-md-3', 'mb-3');
-
-                    card.innerHTML = `
-                    <div class="card shadow">
-                    <a href="./kelas_mat_guru">
-                        <div class="card-body img-fuild d-flex flex-column">
-                            <img src="./assets/mtk.png" alt="Logo" width="12" height="6" class="d-inline-block align-text-top" style="padding-bottom: 12px;">
-                            <div class="card shadow ${getKelasBackgroundColorClass(kelasItem.nama_kelas)}">
-                                <p class="text-center">${kelasItem.nama_kelas}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-
-                    kelasContainer.appendChild(card);
-                });
+            function goToAddJadwalPage() {
+                window.location.href = '<?= base_url('./add_jadwal') ?>';
             }
-            function handleError(error) {
-                alert("Terjadi kesalahan dalam mengambil data");
-                console.error(error);
-            }
-        });
-    </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+            function editJadwal(jadwalId) {
+                window.location.href = `<?= base_url('./edit_jadwal') ?>?id=${jadwalId}`;
+            }
+
+            async function deleteJadwal(jadwalId) {
+                const isConfirmed = confirm('Apakah Anda yakin ingin menghapus jadwal ini?');
+
+                if (isConfirmed) {
+                    try {
+                        const response = await fetch(`${apiUrlJadwal}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                id: jadwalId
+                            }), // send the data in the request body
+                        });
+
+                        if (response.ok) {
+                            // Fetch and display the updated jadwal list
+                            fetchJadwal();
+                        } else {
+                            const errorData = await response.json();
+                            console.error('Failed to delete jadwal:', errorData);
+                            alert('Failed to delete jadwal');
+                        }
+                    } catch (error) {
+                        console.error('Error deleting jadwal:', error);
+                        alert('Error deleting jadwal. See console for details.');
+                    }
+                }
+            }
+
+            fetchJadwal();
+
+            async function fetchFilteredJadwal(searchTerm) {
+                try {
+                    const response = await fetch(`${apiUrlJadwal}?search=${searchTerm}`);
+                    const data = await response.json();
+
+                    renderJadwal(data);
+                } catch (error) {
+                    console.error('Error fetching filtered jadwal:', error);
+                }
+            }
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
 
 </html>

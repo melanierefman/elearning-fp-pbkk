@@ -18,4 +18,20 @@ class Guru extends BaseController
     {
         return view('guru_jadwal');
     }
+    public function add_class(): string
+    {
+        return view('add_class');
+    }
+    public function kelas_mat_guru(): string
+    {
+        return view('kelas_mat_guru');
+    }
+    public function add_section(): string
+    {
+        return view('add_section');
+    }
+    public function jadwal_guru(): string
+    {
+        return view('jadwal_guru');
+    }
 }

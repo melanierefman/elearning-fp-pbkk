@@ -76,7 +76,6 @@
             justify-content: flex-end;
             padding: 30px;
             padding-bottom: 0px;
-
         }
 
         .user-info img {
@@ -99,126 +98,31 @@
             /* Center the image */
         }
 
-        .desktop-1-Mss {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-        }
-
-        .auto-group-39fb-PpZ {
-            display: flex;
+        .d-flex {
             justify-content: space-between;
             align-items: center;
         }
 
-        .vector-zxm {
-            width: 50px;
-            height: auto;
+        /* Add separate containers for pelajaran and tugas */
+        .result-container {
+            margin: 20px;
         }
 
-        .navbar-43-WRK {
+        .result-container h5 {
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+
+        .result-container .row {
             display: flex;
-            align-items: center;
-        }
-
-        .auto-group-zq2d-y41 {
-            display: flex;
-            align-items: center;
-        }
-
-        .frame-63-hVo {
-            display: flex;
-            align-items: center;
-        }
-
-        .frame-64-3Zf {
-            display: flex;
-            align-items: center;
-            margin-right: 20px;
-        }
-
-        .raphael-books-XNM {
-            width: 30px;
-            height: auto;
-            margin-right: 10px;
-        }
-
-        .media-ilmu-pcM,
-        .catalog-JGd,
-        .delivery-R6M,
-        .delivery-LUD {
-            margin: 0;
-            padding: 0;
-            margin-right: 20px;
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .frame-65-5Au {
-            display: flex;
-            align-items: center;
-        }
-
-        .ellipse-1-Nvh {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: #fff;
-            margin-right: 10px;
-        }
-
-        .delivery-1Ts {
-            margin: 0;
-            padding: 0;
-            margin-right: 10px;
-            color: #fff;
-        }
-
-        .iconamoon-arrow-up-2-light-jem {
-            width: 20px;
-            height: auto;
-        }
-
-
-        .bg-success {
-            background-color: #DDFEDF !important;
-            /* Hijau */
-        }
-
-        .bg-primary {
-            background-color: #DDEEFE !important;
-            /* Biru */
-        }
-
-        .bg-purple {
-            background-color: #E8DDFE !important;
-            /* Ungu */
-        }
-
-        .bg-pink {
-            background-color: #FEDDDD !important;
-            /* Pink */
-        }
-
-        .bg-orange {
-            background-color: #FFF0BB !important;
-            /* Kuning */
-        }
-
-        .navbar-nav .nav-link {
-            outline: none;
-        }
-
-        .navbar-nav .nav-item.active a {
-            color: blue;
-            font-weight: bold;
+            gap: 20px;
         }
 
         .card {
-            height: 100%;
+            flex: 1 1 300px;
+            /* Added flex property */
             display: flex;
             flex-direction: column;
-            background-color: #fff;
         }
 
         .card img {
@@ -232,8 +136,8 @@
             display: inline-block;
             padding: 0.5rem 1rem;
             border-radius: 0.25rem;
-            color: #000;
-            background-color: #FFF0BB;
+            color: #ffffff;
+            background-color: #32CA4D;
             /* Set text color to white */
         }
     </style>
@@ -252,13 +156,13 @@
                 <li class="nav-item">
                     <span style="display: flex; align-items: center; padding-left: 20px;">
                         <img src="./assets/beranda.png" alt="Logo" width="20" height="20" class="d-inline-block align-text-top">
-                        <a class="nav-link active" style="padding-left: 5px;" aria-current="page" href="<?= base_url('./') ?>">Beranda</a>
+                        <a class="nav-link active" style="padding-left: 5px;" aria-current="page" href="<?= base_url('#') ?>">Beranda</a>
                     </span>
                 </li>
                 <li class="nav-item">
                     <span style="display: flex; align-items: center; padding-left: 20px;">
                         <img src="./assets/kelas.png" alt="Logo" width="20" height="20" class="d-inline-block align-text-top">
-                        <a class="nav-link active" style="padding-left: 5px;" aria-current="page" href="<?= base_url('#') ?>">Kelas</a>
+                        <a class="nav-link active" style="padding-left: 5px;" aria-current="page" href="<?= base_url('./kelas') ?>">Kelas</a>
                     </span>
                 </li>
                 <li class="nav-item">
@@ -275,17 +179,17 @@
     </header>
 
     <div style="margin-left: 270px;">
-        <div class="d-flex justify-content-between align-items-center" style=" padding-bottom:10px;">
+        <div class="d-flex justify-content-between align-items-center">
         <div class="container mt-4" style="width: 70%">
                 <form class="form-inline">
                     <div class="d-flex justify-content-between align-items-center">
                         <input class="form-control" type="search" placeholder="Cari kelas sekarang..." id="searchInput" aria-label="Search">
-                        <button class="btn btn-primary" type="button" onclick="searchKelas()" style="background-color: #4829B2; color: #ffffff;">Cari</button>
+                        <button class="btn btn-primary" type="button" onclick="searchPelajaran()" style="background-color: #4829B2; color: #ffffff;">Cari</button>
                     </div>
                 </form>
             </div>
             <div class="container mt-4" style="width: 20%">
-                <a href="<?= base_url('./add_class') ?>" class="btn btn-primary" style="background-color: #4829B2; color: #ffffff;">+ Add Class</a>
+                <a href="<?= base_url('./add_section') ?>" class="btn btn-primary" style="background-color: #4829B2; color: #ffffff;">+ Add Section</a>
             </div>
 
             <div class="user-info">
@@ -297,91 +201,72 @@
             </div>
         </div>
 
-        <!-- Add a container for kelas -->
-        <div style="margin: 20px;">
-            <div class="row" id="resultKelas"></div>
+        <!-- Add separate containers for pelajaran and tugas -->
+        <div class="result-container">
+            <img src="./assets/welcome_guru.png" class="img-fluid" style="padding-bottom: 40px;"><br>
+            <div class="row" id="resultPelajaran"></div>
         </div>
-
     </div>
+
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const apiUrlKelas = "http://localhost/elearning/database/kelas-api.php";
-            let allKelas = [];
+            const apiUrlPelajaran = "http://localhost/elearning/database/pelajaran-api.php";
+            let allPelajaran = [];
 
-            // Load all kelas on page load
+            // Load all pelajaran and tugas on page load
             window.addEventListener('load', function() {
-                // Fetch kelas
-                fetch(apiUrlKelas)
+                // Fetch pelajaran
+                fetch(apiUrlPelajaran)
                     .then(response => response.json())
                     .then(function(data) {
-                        allKelas = data;
-                        renderKelas(allKelas);
+                        allPelajaran = data;
+                        renderPelajaran(allPelajaran);
                     })
                     .catch(handleError);
+
             });
-           
-            // Search kelas on button click
-            window.searchKelas = function() {
+
+            // Search pelajaran on button click
+            window.searchPelajaran = function() {
                 const searchTerm = document.getElementById("searchInput").value.trim();
 
                 if (searchTerm === "") {
-                    renderKelas(allKelas);
+                    renderPelajaran(allPelajaran);
                 } else {
-                    const filteredKelas = filterKelas(allKelas, searchTerm);
-                    renderKelas(filteredKelas);
+                    const filteredPelajaran = filterPelajaran(allPelajaran, searchTerm);
+                    renderPelajaran(filteredPelajaran);
                 }
             };
 
-            // function goToAddClassPage() {
-            //     window.location.href = '<?= base_url('./add_class') ?>';
-            // }
+            function renderPelajaran(pelajaran) {
+                const pelajaranContainer = document.getElementById("resultPelajaran");
+                pelajaranContainer.innerHTML = "";
 
-            function getKelasBackgroundColorClass(namaKelas) {
-                switch (namaKelas.toLowerCase()) {
-                    case 'fisika':
-                    case 'seni':
-                        return 'bg-success'; // hijau
-                    case 'matematika':
-                    case 'olahraga':
-                        return 'bg-primary'; // biru
-                    case 'sejarah':
-                    case 'ekonomi':
-                        return 'bg-purple'; // ungu
-                    case 'kimia':
-                    case 'musik':
-                        return 'bg-pink'; // pink
-                    case 'sosiologi':
-                    case 'geografi':
-                        return 'bg-orange'; // kuning
-                    default:
-                        return '';
-                }
-            }
-
-            function renderKelas(kelas) {
-                const kelasContainer = document.getElementById("resultKelas");
-                kelasContainer.innerHTML = "";
-
-                kelas.forEach(kelasItem => {
+                pelajaran.forEach(pel => {
                     const card = document.createElement('div');
-                    card.classList.add('col-4', 'col-md-3', 'mb-3');
+                    card.classList.add('mb-3');
 
                     card.innerHTML = `
-                    <div class="card shadow">
-                    <a href="./kelas_mat_guru">
-                        <div class="card-body img-fuild d-flex flex-column">
-                            <img src="./assets/mtk.png" alt="Logo" width="12" height="6" class="d-inline-block align-text-top" style="padding-bottom: 12px;">
-                            <div class="card shadow ${getKelasBackgroundColorClass(kelasItem.nama_kelas)}">
-                                <p class="text-center">${kelasItem.nama_kelas}</p>
-                            </div>
+                    <div class="card shadow d-flex flex-column" style="align-items: flex-start;">
+                        <div class="card-body img-fuild">
+                            <p class="card-title">${pel.nama_pel}</p>
+                            <h6 class="card-title">${pel.materi_ajar}</h6>
                         </div>
                     </div>
-                `;
+                    `;
 
-                    kelasContainer.appendChild(card);
+                    pelajaranContainer.appendChild(card);
                 });
             }
+
+            function filterPelajaran(pelajaran, searchTerm) {
+                return pelajaran.filter(pel => {
+                    const searchableText = `${pel.nama_pel} ${pel.materi_ajar}`.toLowerCase();
+                    return searchableText.includes(searchTerm.toLowerCase());
+                });
+            }
+
             function handleError(error) {
                 alert("Terjadi kesalahan dalam mengambil data");
                 console.error(error);
