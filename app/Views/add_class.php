@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Jadwal Baru</title>
+    <title>Tambah Kelas Baru</title>
     <style>
         .login-page {
         width: 360px;
@@ -111,51 +111,43 @@
     <div class="login-page">
         <div class="form">
             <form class="login-form">
-            <input type="text" id="hari" placeholder="Hari" required/>
-            <input type="text" id="waktu" placeholder="Waktu" required/>
-            <input type="text" id="kelas" placeholder="Kelas" required/>
-            <button type="button" onclick="addJadwal()">Tambahkan Jadwal</button>
+            <input type="text" id="nama_kelas" placeholder="Nama Kelas" required/>
+            <button type="button" onclick="addClass()">Add Class</button>
             </form>
         </div>
     </div>
 
     <script>
-        const apiUrlJadwal = 'http://localhost/elearning/database/jadwal-api.php';
+        const apiUrlKelas = 'http://localhost/elearning/database/kelas-api.php';
 
-        async function addJadwal() {
-            const hari = document.getElementById('hari').value;
-            const waktu = document.getElementById('waktu').value;
-            const kelas = document.getElementById('kelas').value;
+        async function addClass() {
+            const NameClass = document.getElementById('nama_kelas').value;
 
-            console.log("Adding jadwal:", {
-                hari,
-                waktu,
-                kelas
+            console.log("Adding Class:", {
+                nama_kelas
             });
 
             try {
-                const response = await fetch(apiUrlJadwal, {
+                const response = await fetch(apiUrlKelas, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        hari,
-                        waktu,
-                        kelas
+                        nama_kelas
                     }),
                 });
 
                 if (response.ok) {
-                    console.log("Jadwal added successfully!");
+                    console.log("Class added successfully!");
                     // Redirect back to the main page after adding the jadwal
-                    window.location.href = '<?= base_url('./jadwal') ?>';
+                    window.location.href = '<?= base_url('./guru_kelas') ?>';
                 } else {
-                    console.error('Failed to add jadwal');
+                    console.error('Failed to add Class');
                     console.error(await response.text());
                 }
             } catch (error) {
-                console.error('Error adding jadwal:', error);
+                console.error('Error adding Class:', error);
             }
         }
 

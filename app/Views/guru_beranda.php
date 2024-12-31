@@ -253,7 +253,7 @@
                 <form class="form-inline">
                     <div class="d-flex justify-content-between align-items-center">
                         <input class="form-control" type="search" placeholder="Cari kelas sekarang..." id="searchInput" aria-label="Search">
-                        <button class="btn btn-primary" type="button" onclick="searchPelajaran()">Cari</button>
+                        <button class="btn btn-primary" type="button" onclick="searchPelajaran()" style="background-color: #4829B2; color: #ffffff;">Cari</button>
                     </div>
                 </form>
             </div>

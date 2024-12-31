@@ -362,6 +362,7 @@
 
                     card.innerHTML = `
                     <div class="card shadow">
+                    <a href="./kelas_mat">
                         <div class="card-body img-fuild d-flex flex-column">
                             <img src="./assets/mtk.png" alt="Logo" width="12" height="6" class="d-inline-block align-text-top" style="padding-bottom: 12px;">
                             <div class="card shadow ${getKelasBackgroundColorClass(kelasItem.nama_kelas)}">

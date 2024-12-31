@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Jadwal Baru</title>
+    <title>Tambah Section Baru</title>
     <style>
         .login-page {
         width: 360px;
@@ -107,55 +107,62 @@
 </head>
 
 <body>
-    <h2>Add Jadwal</h2>
+
+    <!-- <h2>Tambah Section Baru</h2>
+    <form id="addJadwalForm">
+        <label for="nama_pel">Nama Pelajaran:</label>
+        <input type="text" id="nama_pel" required>
+
+        <label for="materi_ajar">Materi Ajar:</label>
+        <input type="text" id="materi_ajar" required>
+
+        <button type="button" onclick="addSection()">Tambahkan Jadwal</button>
+    </form> -->
+    <h2>Add Section</h2>
     <div class="login-page">
         <div class="form">
             <form class="login-form">
-            <input type="text" id="hari" placeholder="Hari" required/>
-            <input type="text" id="waktu" placeholder="Waktu" required/>
-            <input type="text" id="kelas" placeholder="Kelas" required/>
-            <button type="button" onclick="addJadwal()">Tambahkan Jadwal</button>
+            <input type="text" id="nama_pel" placeholder="Hari" required/>
+            <input type="text" id="materi_ajar" placeholder="Waktu" required/>
+            <button type="button" onclick="addSection()">Tambahkan Section</button>
             </form>
         </div>
     </div>
 
     <script>
-        const apiUrlJadwal = 'http://localhost/elearning/database/jadwal-api.php';
+        const apiUrlSection = 'http://localhost/elearning/database/pelajaran-api.php';
 
-        async function addJadwal() {
-            const hari = document.getElementById('hari').value;
-            const waktu = document.getElementById('waktu').value;
-            const kelas = document.getElementById('kelas').value;
+        async function addSection() {
+            const NamaPelajaran = document.getElementById('nama_pel').value;
+            const MateriAjar = document.getElementById('materi_ajar').value;
 
-            console.log("Adding jadwal:", {
-                hari,
-                waktu,
-                kelas
+            console.log("Adding Section:", {
+                nama_pel,
+                materi_ajar
             });
 
             try {
-                const response = await fetch(apiUrlJadwal, {
+                const response = await fetch(apiUrlSection, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        hari,
-                        waktu,
-                        kelas
+                        nama_pel,
+                        materi_ajar
                     }),
                 });
 
                 if (response.ok) {
-                    console.log("Jadwal added successfully!");
+                    console.log("Section added successfully!");
                     // Redirect back to the main page after adding the jadwal
-                    window.location.href = '<?= base_url('./jadwal') ?>';
+                    window.location.href = '<?= base_url('./kelas_mat_guru') ?>';
                 } else {
-                    console.error('Failed to add jadwal');
+                    console.error('Failed to add Section');
                     console.error(await response.text());
                 }
             } catch (error) {
-                console.error('Error adding jadwal:', error);
+                console.error('Error adding Section:', error);
             }
         }
 

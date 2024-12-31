@@ -258,7 +258,7 @@
                 </form>
             </div>
             <div class="container mt-4" style="width: 20%">
-                <button class="btn btn-primary" type="button" onclick="goToAddJadwalPage()">+ Jadwal Baru</button>
+                <button class="btn btn-primary" type="button" onclick="goToAddJadwalPage()">+ Add Schedule</button>
             </div>
             <div class="user-info">
                 <img src="./assets/ellipse-1-bg-eyb.png" alt="Logo" width="48" height="48" class="d-inline-block align-text-top">

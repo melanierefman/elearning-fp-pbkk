@@ -24,7 +24,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            background-color: #002979;
+            background-color: #4829B2;
             color: #fff;
             padding-top: 40px;
             padding-right: 20px;
@@ -162,13 +162,13 @@
                 <li class="nav-item">
                     <span style="display: flex; align-items: center; padding-left: 20px;">
                         <img src="./assets/kelas.png" alt="Logo" width="20" height="20" class="d-inline-block align-text-top">
-                        <a class="nav-link active" style="padding-left: 5px;" aria-current="page" href="<?= base_url('./kelas') ?>">Kelas</a>
+                        <a class="nav-link active" style="padding-left: 5px;" aria-current="page" href="<?= base_url('./guru_kelas') ?>">Kelas</a>
                     </span>
                 </li>
                 <li class="nav-item">
                     <span style="display: flex; align-items: center; padding-left: 20px;">
                         <img src="./assets/jadwal.png" alt="Logo" width="20" height="20" class="d-inline-block align-text-top">
-                        <a class="nav-link active" style="padding-left: 5px;" aria-current="page" href="<?= base_url('./jadwal') ?>">Jadwal</a>
+                        <a class="nav-link active" style="padding-left: 5px;" aria-current="page" href="<?= base_url('./jadwal_guru') ?>">Jadwal</a>
                     </span>
                 </li>
                 <li class="nav-item1 text-center">
@@ -180,13 +180,16 @@
 
     <div style="margin-left: 270px;">
         <div class="d-flex justify-content-between align-items-center">
-            <div class="container mt-4" style="width: 81%;">
+        <div class="container mt-4" style="width: 70%">
                 <form class="form-inline">
                     <div class="d-flex justify-content-between align-items-center">
                         <input class="form-control" type="search" placeholder="Cari kelas sekarang..." id="searchInput" aria-label="Search">
-                        <button class="btn btn-primary" type="button" onclick="searchPelajaran()">Cari</button>
+                        <button class="btn btn-primary" type="button" onclick="searchPelajaran()" style="background-color: #4829B2; color: #ffffff;">Cari</button>
                     </div>
                 </form>
+            </div>
+            <div class="container mt-4" style="width: 20%">
+                <a href="<?= base_url('./add_section') ?>" class="btn btn-primary" style="background-color: #4829B2; color: #ffffff;">+ Add Section</a>
             </div>
 
             <div class="user-info">
@@ -200,7 +203,7 @@
 
         <!-- Add separate containers for pelajaran and tugas -->
         <div class="result-container">
-            <img src="./assets/welcome.png" class="img-fluid" style="padding-bottom: 40px;"><br>
+            <img src="./assets/welcome_guru.png" class="img-fluid" style="padding-bottom: 40px;"><br>
             <div class="row" id="resultPelajaran"></div>
         </div>
     </div>
@@ -248,12 +251,10 @@
                     <div class="card shadow d-flex flex-column" style="align-items: flex-start;">
                         <div class="card-body img-fuild">
                             <p class="card-title">${pel.nama_pel}</p>
-                            <a href="./materi_page"> <!-- Tambahkan ini -->
-                                <h6 class="card-title">${pel.materi_ajar}</h6>
-                            </a> <!-- Tambahkan ini -->
+                            <h6 class="card-title">${pel.materi_ajar}</h6>
                         </div>
                     </div>
-                `;
+                    `;
 
                     pelajaranContainer.appendChild(card);
                 });
